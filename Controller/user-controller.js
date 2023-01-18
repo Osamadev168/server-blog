@@ -34,20 +34,18 @@ export const signin = async (req, res) => {
     let matchPassword = await bycrpyt.compare(req.body.password, user.password);
     if (matchPassword) {
       const accesstoken = jwt.sign(user.toJSON(), process.env.AccessToken, {
-        expiresIn: "10m",
+        expiresIn: "20m",
       });
       const refreshToken = jwt.sign(user.toJSON(), process.env.RefreshToken);
 
       const newToken = new token({ token: refreshToken });
       await newToken.save();
-      return res
-        .status(200)
-        .json({
-          name: user.name,
-          username: user.username,
-          accesstoken: accesstoken,
-          refreshToken: refreshToken,
-        });
+      return res.status(200).json({
+        name: user.name,
+        username: user.username,
+        accesstoken: accesstoken,
+        refreshToken: refreshToken,
+      });
     } else {
       res.status(404).json({ msg: "Incorrect pssword" });
     }
