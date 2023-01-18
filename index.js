@@ -19,7 +19,7 @@ App.use("/", Router);
 const port = process.env.PORT;
 const username = process.env.username;
 const password = process.env.password;
-Connection(username, password);
+Connection();
 
 App.listen(port, () => {
   console.log(`Server is running on port ${port} !`);
