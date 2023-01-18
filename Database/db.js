@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 export const Connection = async (username, password) => {
-  const Database_Url = `mongodb+srv://${username}:${password}@cluster0.5illgl0.mongodb.net/?retryWrites=true&w=majority`;
+  const Database_Url = `mongodb://mongo:AzQXLUDFgnWOfmlzMj4v@containers-us-west-139.railway.app:5889`;
   try {
     await mongoose.connect(Database_Url, () => {
       console.log("Database is connected successfully!");
