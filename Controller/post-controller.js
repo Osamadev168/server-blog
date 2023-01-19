@@ -72,6 +72,7 @@ export const getUserPosts = async (req, res) => {
       CreatedAt: "desc",
     });
     res.status(200).json(posts);
+    console.log(posts);
   } catch (e) {
     console.log(e);
   }

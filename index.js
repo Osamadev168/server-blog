@@ -1,16 +1,19 @@
 import express from "express";
 import dotenv from "dotenv";
+import helmet from "helmet";
 import bodyParser from "body-parser";
 import cors from "cors";
 import expressfileupload from "express-fileupload";
 import Router from "./Routes/router.js";
 import { Connection } from "./Database/db.js";
+import { authenticateJWT } from "./Controller/firebase-token-verify.js";
 //dotenv
 dotenv.config();
 
 const App = express();
 //middlewares
 App.use(cors());
+App.use(helmet());
 App.use(expressfileupload({ useTempFiles: true }));
 App.use(express.json({ limit: "50mb" }));
 App.use(bodyParser.json({ limit: "50mb", extended: true }));
