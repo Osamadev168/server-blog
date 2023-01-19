@@ -6,7 +6,6 @@ import cors from "cors";
 import expressfileupload from "express-fileupload";
 import Router from "./Routes/router.js";
 import { Connection } from "./Database/db.js";
-import { authenticateJWT } from "./Controller/firebase-token-verify.js";
 //dotenv
 dotenv.config();
 
