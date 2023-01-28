@@ -19,8 +19,7 @@ App.use(bodyParser.json({ limit: "50mb", extended: true }));
 App.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 App.use("/", Router);
 const port = process.env.PORT;
-const username = process.env.username;
-const password = process.env.password;
+
 Connection();
 
 App.listen(port, () => {

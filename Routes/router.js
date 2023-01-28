@@ -3,11 +3,11 @@ import {
   addView,
   approvePost,
   deletePost,
-  getAllPosts,
+  getLatestPosts,
+  getPopularPosts,
   getPostbyCategory,
   getpostbyid,
   getPostsbyPopularity,
-  getPostsforCarousel,
   getSubmittedPosts,
   getUserPosts,
   post,
@@ -15,10 +15,10 @@ import {
 } from "../Controller/post-controller.js";
 const Router = express.Router();
 Router.post("/create", post);
-Router.get("/posts", getAllPosts);
+Router.post("/latestposts", getLatestPosts);
 Router.get("/posts/submitted", getSubmittedPosts);
 Router.get("/posts/submitted/user/:author", getUserPosts);
-Router.get("/getpostsforcarousel", getPostsforCarousel);
+Router.post("/popularposts", getPopularPosts);
 Router.get("/post/:id", getpostbyid);
 Router.delete("/post/:id", deletePost);
 Router.post("/post/:id", addView);

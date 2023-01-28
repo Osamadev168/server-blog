@@ -33,12 +33,20 @@ export const post = async (req, res) => {
     console.log(e);
   }
 };
-export const getAllPosts = async (req, res) => {
+export const getLatestPosts = async (req, res) => {
   try {
     let posts;
-    posts = await PostModel.find({ approved: true }).sort({
-      CreatedAt: "desc",
-    });
+    let category = req.body.category;
+    if (category === "") {
+      posts = await PostModel.find({
+        approved: true,
+      }).sort({ CreatedAt: "desc" });
+    } else {
+      posts = await PostModel.find({
+        approved: true,
+        category: category,
+      }).limit(10);
+    }
     res.status(200).json(posts);
   } catch (e) {
     console.log(e);
@@ -55,10 +63,22 @@ export const getSubmittedPosts = async (req, res) => {
     console.log(e);
   }
 };
-export const getPostsforCarousel = async (req, res) => {
+export const getPopularPosts = async (req, res) => {
   try {
     let posts;
-    posts = await PostModel.find({}).sort({ CreatedAt: "desc" }).limit(10);
+    let category = req.body.category;
+    if (category === "") {
+      posts = await PostModel.find({
+        approved: true,
+      }).sort({ views: "desc" });
+    } else {
+      posts = await PostModel.find({
+        approved: true,
+        category: category,
+      })
+        .sort({ views: "desc" })
+        .limit(10);
+    }
     res.status(200).json(posts);
   } catch (e) {
     console.log(e);
