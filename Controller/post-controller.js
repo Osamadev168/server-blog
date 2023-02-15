@@ -49,7 +49,9 @@ export const getLatestPosts = async (req, res) => {
       posts = await PostModel.find({
         approved: true,
         category: category,
-      }).limit(10);
+      })
+        .sort({ CreatedAt: "desc" })
+        .limit(15);
     }
     res.status(200).json(posts);
   } catch (e) {
