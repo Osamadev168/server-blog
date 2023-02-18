@@ -212,3 +212,15 @@ export const getUserPosts = async (req, res) => {
     });
   }
 };
+export const deletePostUser = async (req, res) => {
+  try {
+    await PostModel.findById(req.params.id).deleteOne();
+    res.status(200).json({
+      msg: "Post deleted!",
+    });
+  } catch (e) {
+    res.status(404).json({
+      msg: e.message,
+    });
+  }
+};
