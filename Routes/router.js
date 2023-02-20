@@ -4,6 +4,7 @@ import {
   approvePost,
   deletePost,
   deletePostUser,
+  getBlogbyTag,
   getLatestPosts,
   getPopularPosts,
   getPostbyCategory,
@@ -30,6 +31,6 @@ Router.get("/posts/category/:category", getPostbyCategory);
 Router.post("/post/:id/new/comment", submitComment);
 Router.get("/popular", getPostsbyPopularity);
 Router.get("/", getPostsbyPopularity);
-
+Router.get("/blog/tag/:tag", getBlogbyTag);
 Router.post("/post/approve/:id", approvePost);
 export default Router;

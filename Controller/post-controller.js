@@ -11,6 +11,7 @@ export const post = async (req, res) => {
     author,
     authorId,
     approved,
+    tags,
   } = req.body;
   const CreatedAt = Date.parse(req.body.CreatedAt);
   const postData = {
@@ -24,6 +25,7 @@ export const post = async (req, res) => {
     author,
     authorId,
     approved,
+    tags,
   };
   const newPost = new PostModel(postData);
   try {
@@ -105,6 +107,19 @@ export const getUserSubmittedPosts = async (req, res) => {
     console.log(posts);
   } catch (e) {
     console.log(e);
+  }
+};
+export const getBlogbyTag = async (req, res) => {
+  try {
+    let response;
+    let tag = req.params.tag;
+    let asd = "tags";
+    response = await PostModel.find({
+      tags: tag,
+    });
+    res.status(200).json(response);
+  } catch (e) {
+    res.status(400).json(e.message);
   }
 };
 export const getPostbyid = async (req, res) => {
