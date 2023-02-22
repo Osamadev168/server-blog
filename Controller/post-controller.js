@@ -206,6 +206,41 @@ export const addView = async (req, res) => {
     res.status(400).json(e);
   }
 };
+export const updateBlog = async (req, res) => {
+  try {
+    const {
+      image,
+      title,
+      body,
+      category,
+      description,
+      comments,
+      author,
+      authorId,
+      approved,
+      tags,
+    } = req.body;
+    const CreatedAt = Date.parse(req.body.CreatedAt);
+    const postData = {
+      image,
+      title,
+      body,
+      category,
+      CreatedAt,
+      description,
+      comments,
+      author,
+      authorId,
+      approved,
+      tags,
+    };
+    const id = req.params.id;
+    await PostModel.updateOne({ _id: id }, postData);
+    res.status(200).json("success!");
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 export const approvePost = async (req, res) => {
   try {
     const id = req.params.id;

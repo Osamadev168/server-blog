@@ -14,6 +14,7 @@ import {
   getUserSubmittedPosts,
   post,
   submitComment,
+  updateBlog,
 } from "../Controller/post-controller.js";
 import { createUser } from "../Controller/user-controller.js";
 const Router = express.Router();
@@ -32,5 +33,7 @@ Router.post("/post/:id/new/comment", submitComment);
 Router.get("/popular", getPostsbyPopularity);
 Router.get("/", getPostsbyPopularity);
 Router.get("/blog/tag/:tag", getBlogbyTag);
+Router.put("/blog/update/:id", updateBlog);
+
 Router.post("/post/approve/:id", approvePost);
 export default Router;
