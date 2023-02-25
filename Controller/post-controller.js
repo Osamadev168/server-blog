@@ -262,6 +262,21 @@ export const getUserPosts = async (req, res) => {
     });
   }
 };
+export const getAuthorBlogs = async (req, res) => {
+  try {
+    let author = req.params.author;
+    let posts = await PostModel.find({ author: author, approve: true })
+      .sort({
+        views: "descending",
+      })
+      .limit(4);
+    res.status(200).json(posts);
+  } catch (e) {
+    return res.status(401).json({
+      msg: e.message,
+    });
+  }
+};
 export const deletePostUser = async (req, res) => {
   try {
     await PostModel.findById(req.params.id).deleteOne();
