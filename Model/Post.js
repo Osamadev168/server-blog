@@ -36,6 +36,9 @@ const PostSchema = mongoose.Schema({
         type: String,
         required: true,
       },
+      userimage: {
+        type: String,
+      },
       comment: {
         type: String,
         required: true,

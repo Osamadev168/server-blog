@@ -166,6 +166,7 @@ export const submitComment = async (req, res) => {
         $push: {
           comments: {
             username: req.body.username,
+            userimage: req.body.userimage,
             comment: req.body.comment,
             date: new Date(),
           },
