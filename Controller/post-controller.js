@@ -84,7 +84,9 @@ export const getPopularPosts = async (req, res) => {
     if (category === "") {
       posts = await PostModel.find({
         approved: true,
-      }).sort({ views: "desc" });
+      })
+        .sort({ views: "desc" })
+        .limit(10);
     } else {
       posts = await PostModel.find({
         approved: true,
@@ -96,6 +98,22 @@ export const getPopularPosts = async (req, res) => {
     res.status(200).json(posts);
   } catch (e) {
     console.log(e);
+  }
+};
+export const getBlogs = async (req, res) => {
+  try {
+    const pageOptions = {
+      page: parseInt(req.params.page, 10) || 0,
+      limit: parseInt(req.params.limit, 10) || 10,
+    };
+    let response = await PostModel.find({ approved: true })
+      .sort({ CreatedAt: "desc" })
+      .skip(pageOptions.page * pageOptions.limit)
+      .limit(pageOptions.limit);
+
+    res.status(200).json(response);
+  } catch (e) {
+    console.error(e.message);
   }
 };
 export const getUserSubmittedPosts = async (req, res) => {
@@ -309,11 +327,10 @@ export const getUserPosts = async (req, res) => {
 export const getAuthorBlogs = async (req, res) => {
   try {
     let author = req.params.author;
-    let posts = await PostModel.find({ author: author, approved: true })
-      .sort({
-        views: "descending",
-      })
-      .limit(4);
+    let posts = await PostModel.aggregate([
+      { $match: { author: author, approved: true } },
+      { $sample: { size: 4 } },
+    ]);
     res.status(200).json(posts);
   } catch (e) {
     return res.status(401).json({
