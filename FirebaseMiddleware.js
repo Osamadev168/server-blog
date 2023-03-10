@@ -1,7 +1,7 @@
 import Admin from "./firebaseAdmin.js";
 import dotenv from "dotenv";
 dotenv.config();
-export const verifyToken = async (req, res) => {
+export const verifyToken = async (req, res, next) => {
   try {
     let token = req.body.idToken;
     const adminId = process.env.AdminId;

@@ -1,10 +1,10 @@
 import PostModel from "../Model/Post.js";
-
+import sanitizeHtml from "sanitize-html";
+import Admin from "../firebaseAdmin.js";
 export const post = async (req, res) => {
   const {
     image,
     title,
-    body,
     category,
     description,
     comments,
@@ -15,6 +15,7 @@ export const post = async (req, res) => {
     tags,
   } = req.body;
   const CreatedAt = Date.parse(req.body.CreatedAt);
+  const body = sanitizeHtml(req.body.body);
   const postData = {
     image,
     title,
@@ -136,6 +137,7 @@ export const getBlogbyTag = async (req, res) => {
     let asd = "tags";
     response = await PostModel.find({
       tags: tag,
+      approved: true,
     }).sort({ CreatedAt: "descending" });
     res.status(200).json(response);
   } catch (e) {
@@ -305,11 +307,16 @@ export const updateBlog = async (req, res) => {
 };
 export const approvePost = async (req, res) => {
   try {
-    const id = req.params.id;
-    await PostModel.updateOne({ _id: id }, { $set: { approved: true } });
-    res.status(200).json("success!");
+    let token = req.body.idToken;
+    const adminId = process.env.AdminId;
+    let decodedToken = await Admin.auth().verifyIdToken(token);
+    if (decodedToken.uid === adminId) {
+      const id = req.params.id;
+      await PostModel.updateOne({ _id: id }, { $set: { approved: true } });
+      res.status(200).json("success!");
+    }
   } catch (e) {
-    res.status(400).json(e);
+    res.status(400).json(e.message);
   }
 };
 export const getUserPosts = async (req, res) => {
