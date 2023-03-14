@@ -56,14 +56,16 @@ export const getLatestPosts = async (req, res) => {
     if (category === "") {
       posts = await PostModel.find({
         approved: true,
-      }).sort({ CreatedAt: "desc" });
+      })
+        .sort({ CreatedAt: "desc" })
+        .limit(20);
     } else {
       posts = await PostModel.find({
         approved: true,
         category: category,
       })
         .sort({ CreatedAt: "desc" })
-        .limit(15);
+        .limit(20);
     }
     res.status(200).json(posts);
   } catch (e) {
@@ -94,14 +96,14 @@ export const getPopularPosts = async (req, res) => {
         approved: true,
       })
         .sort({ views: "desc" })
-        .limit(10);
+        .limit(20);
     } else {
       posts = await PostModel.find({
         approved: true,
         category: category,
       })
         .sort({ views: "desc" })
-        .limit(10);
+        .limit(20);
     }
     res.status(200).json(posts);
   } catch (e) {
@@ -215,7 +217,7 @@ export const getPostsbyPopularity = async (req, res) => {
     let posts;
     posts = await PostModel.find({ approved: true })
       .sort({ views: "desc" })
-      .limit(20);
+      .limit(5);
     res.status(200).json(posts);
   } catch (e) {
     console.log(e);
@@ -396,6 +398,21 @@ export const searchBlog = async (req, res) => {
       },
     ]);
     res.status(200).json(result);
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
+export const sliderShowBlogs = async (req, res) => {
+  try {
+    let response = await PostModel.find({})
+      .sort({
+        views: "desc",
+        commentslength: "desc",
+      })
+      .limit(5);
+
+    res.status(200).json(response);
   } catch (e) {
     console.error(e.message);
   }

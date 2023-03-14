@@ -18,6 +18,7 @@ import {
   getUserSubmittedPosts,
   post,
   searchBlog,
+  sliderShowBlogs,
   submitComment,
   updateBlog,
   updateBlogAuthor,
@@ -49,4 +50,5 @@ Router.post("/post/approve/:id", approvePost);
 Router.put("/blog/update", updateBlogAuthor);
 Router.post("/blog/update/comments", updateBlogAuthorinComments);
 Router.get("/search", searchBlog);
+Router.get("/blogs/slider", sliderShowBlogs);
 export default Router;
