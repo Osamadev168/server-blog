@@ -51,27 +51,27 @@ export const post = async (req, res) => {
 };
 export const getLatestPosts = async (req, res) => {
   try {
-    let posts;
+    let response;
     let category = req.body.category;
+    let pageOptions = {
+      page: parseInt(req.params.page, 10) || 0,
+      limit: parseInt(req.params.limit, 10) || 10,
+    };
     if (category === "") {
-      posts = await PostModel.find({
-        approved: true,
-      })
+      response = await PostModel.find({ approved: true })
         .sort({ CreatedAt: "desc" })
-        .limit(20);
+        .skip(pageOptions.page * pageOptions.limit)
+        .limit(pageOptions.limit);
     } else {
-      posts = await PostModel.find({
-        approved: true,
-        category: category,
-      })
+      response = await PostModel.find({ approved: true, category: category })
         .sort({ CreatedAt: "desc" })
-        .limit(20);
+        .skip(pageOptions.page * pageOptions.limit)
+        .limit(pageOptions.limit);
     }
-    res.status(200).json(posts);
+
+    res.status(200).json(response);
   } catch (e) {
-    return res.status(401).json({
-      msg: e.message,
-    });
+    console.error(e.message);
   }
 };
 export const getSubmittedPosts = async (req, res) => {
@@ -89,26 +89,49 @@ export const getSubmittedPosts = async (req, res) => {
 };
 export const getPopularPosts = async (req, res) => {
   try {
-    let posts;
+    let response;
     let category = req.body.category;
+    let pageOptions = {
+      page: parseInt(req.params.page, 10) || 0,
+      limit: parseInt(req.params.limit, 10) || 10,
+    };
     if (category === "") {
-      posts = await PostModel.find({
-        approved: true,
-      })
-        .sort({ views: "desc" })
-        .limit(20);
+      response = await PostModel.find({ approved: true })
+        .sort({ views: "desc", commentslength: "desc" })
+        .skip(pageOptions.page * pageOptions.limit)
+        .limit(pageOptions.limit);
     } else {
-      posts = await PostModel.find({
-        approved: true,
-        category: category,
-      })
-        .sort({ views: "desc" })
-        .limit(20);
+      response = await PostModel.find({ approved: true, category: category })
+        .sort({ views: "desc", commentslength: "desc" })
+        .skip(pageOptions.page * pageOptions.limit)
+        .limit(pageOptions.limit);
     }
-    res.status(200).json(posts);
+
+    res.status(200).json(response);
   } catch (e) {
-    console.log(e);
+    console.error(e.message);
   }
+  // try {
+  //   let posts;
+  //   let category = req.body.category;
+  //   if (category === "") {
+  //     posts = await PostModel.find({
+  //       approved: true,
+  //     })
+  //       .sort({ views: "desc" })
+  //       .limit(20);
+  //   } else {
+  //     posts = await PostModel.find({
+  //       approved: true,
+  //       category: category,
+  //     })
+  //       .sort({ views: "desc" })
+  //       .limit(20);
+  //   }
+  //   res.status(200).json(posts);
+  // } catch (e) {
+  //   console.log(e);
+  // }
 };
 export const getBlogs = async (req, res) => {
   try {
