@@ -433,15 +433,8 @@ export const sliderShowBlogs = async (req, res) => {
         commentslength: "desc",
       })
       .limit(5);
-
     res.status(200).json(response);
   } catch (e) {
     console.error(e.message);
   }
-};
-export const HomePageSlider = async (req, res) => {
-  try {
-    let category = req.params.category;
-    let response = await PostModel.find({}).sort({});
-  } catch (e) {}
 };
