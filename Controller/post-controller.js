@@ -15,7 +15,9 @@ export const post = async (req, res) => {
     tags,
   } = req.body;
   const CreatedAt = Date.parse(req.body.CreatedAt);
-  const body = sanitizeHtml(req.body.body);
+  const body = sanitizeHtml(req.body.body, {
+    allowedTags: ["img"],
+  });
   const postData = {
     image,
     title,
@@ -111,27 +113,6 @@ export const getPopularPosts = async (req, res) => {
   } catch (e) {
     console.error(e.message);
   }
-  // try {
-  //   let posts;
-  //   let category = req.body.category;
-  //   if (category === "") {
-  //     posts = await PostModel.find({
-  //       approved: true,
-  //     })
-  //       .sort({ views: "desc" })
-  //       .limit(20);
-  //   } else {
-  //     posts = await PostModel.find({
-  //       approved: true,
-  //       category: category,
-  //     })
-  //       .sort({ views: "desc" })
-  //       .limit(20);
-  //   }
-  //   res.status(200).json(posts);
-  // } catch (e) {
-  //   console.log(e);
-  // }
 };
 export const getBlogs = async (req, res) => {
   try {
@@ -427,7 +408,7 @@ export const searchBlog = async (req, res) => {
 
 export const sliderShowBlogs = async (req, res) => {
   try {
-    let response = await PostModel.find({})
+    let response = await PostModel.find({ approved: true })
       .sort({
         views: "desc",
         commentslength: "desc",
