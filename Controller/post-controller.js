@@ -52,12 +52,12 @@ export const post = async (req, res) => {
 export const getLatestPosts = async (req, res) => {
   try {
     let response;
-    let category = req.body.category;
+    let category = req.params.category;
     let pageOptions = {
       page: parseInt(req.params.page, 10) || 0,
       limit: parseInt(req.params.limit, 10) || 10,
     };
-    if (category === "") {
+    if (category === "All") {
       response = await PostModel.find({ approved: true })
         .sort({ CreatedAt: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
@@ -90,17 +90,17 @@ export const getSubmittedPosts = async (req, res) => {
 export const getPopularPosts = async (req, res) => {
   try {
     let response;
-    let category = req.body.category;
+    let category = req.params.category;
     let pageOptions = {
       page: parseInt(req.params.page, 10) || 0,
       limit: parseInt(req.params.limit, 10) || 10,
     };
-    if (category === "") {
+    if (category === "All") {
       response = await PostModel.find({ approved: true })
         .sort({ views: "desc", commentslength: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
-    } else {
+    } else if (category) {
       response = await PostModel.find({ approved: true, category: category })
         .sort({ views: "desc", commentslength: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
@@ -166,7 +166,6 @@ export const getBlogbyTag = async (req, res) => {
   try {
     let response;
     let tag = req.params.tag;
-    let asd = "tags";
     response = await PostModel.find({
       tags: tag,
       approved: true,
@@ -439,4 +438,10 @@ export const sliderShowBlogs = async (req, res) => {
   } catch (e) {
     console.error(e.message);
   }
+};
+export const HomePageSlider = async (req, res) => {
+  try {
+    let category = req.params.category;
+    let response = await PostModel.find({}).sort({});
+  } catch (e) {}
 };
