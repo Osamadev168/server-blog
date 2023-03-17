@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const PostSchema = mongoose.Schema({
+const PostSchema = new mongoose.Schema({
   image: {
     type: String,
   },
@@ -64,7 +64,7 @@ const PostSchema = mongoose.Schema({
     type: Boolean,
   },
 });
-PostModel.createIndexes({
+PostSchema.index({
   title: "text",
   description: "text",
   tags: "text",
