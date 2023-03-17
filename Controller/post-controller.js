@@ -394,7 +394,12 @@ export const deletePostUser = async (req, res) => {
 export const searchBlog = async (req, res) => {
   try {
     let query = req.query.blogs;
-    let result = await PostModel.createIndexes(
+    let result = await PostModel.find(
+      {
+        $text: {
+          $search: query,
+        },
+      }
       // {
       //   $search: {
       //     index: "blogs",
@@ -405,9 +410,9 @@ export const searchBlog = async (req, res) => {
       //   },
       // },
 
-      {
-        title: "text",
-      }
+      // {
+      //   title: "text",
+      // }
     );
     res.status(200).json(result);
   } catch (e) {
