@@ -64,6 +64,11 @@ const PostSchema = mongoose.Schema({
     type: Boolean,
   },
 });
+PostModel.createIndexes({
+  title: "text",
+  description: "text",
+  tags: "text",
+});
 
 const PostModel = mongoose.model("posts", PostSchema);
 export default PostModel;
