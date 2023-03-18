@@ -7,7 +7,11 @@ import Router from "./Routes/router.js";
 import { Connection } from "./Database/db.js";
 dotenv.config();
 const App = express();
-App.use(cors());
+App.use(
+  cors({
+    origin: ["https://www.hubblefeed.com/", "http://localhost:7000"],
+  })
+);
 App.use(helmet());
 App.use(express.json({ limit: "50mb" }));
 App.use(bodyParser.json({ limit: "50mb", extended: true }));
