@@ -16,13 +16,7 @@ export const post = async (req, res) => {
     tags,
   } = req.body;
   const CreatedAt = Date.parse(req.body.CreatedAt);
-  const body = sanitizeHtml(req.body.body, {
-    allowedTags: ["img", "iframe", "a"],
-    allowedAttributes: {
-      a: ["href", "rel", "target"],
-    },
-    allowedIframeHostnames: ["www.youtube.com"],
-  });
+  const body = req.body.body;
   const postData = {
     image,
     title,
