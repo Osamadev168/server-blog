@@ -17,7 +17,7 @@ App.use(allowCrossDomain);
 //some other code
 App.use(
   cors({
-    origin: ["https://www.hubblefeed.com/", "http://localhost:7000/"],
+    origin: ["https://www.hubblefeed.com", "http://localhost:7000/"],
   })
 );
 
