@@ -14,12 +14,8 @@ var allowCrossDomain = function (req, res, next) {
   next();
 };
 App.use(allowCrossDomain);
-//some other code
-App.use(
-  cors({
-    origin: ["https://www.hubblefeed.com", "http://localhost:7000/"],
-  })
-);
+// some other code
+App.use(cors());
 
 App.use(helmet());
 App.use(express.json({ limit: "50mb" }));
