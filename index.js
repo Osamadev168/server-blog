@@ -14,7 +14,6 @@ var allowCrossDomain = function (req, res, next) {
   next();
 };
 App.use(allowCrossDomain);
-// some other code
 App.use(cors());
 
 App.use(helmet());
