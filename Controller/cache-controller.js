@@ -2,9 +2,9 @@ import NodeCache from "node-cache";
 export const cache = new NodeCache({ stdTTL: 4000 });
 export const verifyCache = (req, res, next) => {
   try {
-    const { category } = req.params;
+    const { category, page, limit } = req.params;
     if (cache.has(category)) {
-      return res.status(200).json(cache.get(category));
+      return res.status(200).json(cache.get(category, page, limit));
     }
     return next();
   } catch (e) {

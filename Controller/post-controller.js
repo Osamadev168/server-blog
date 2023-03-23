@@ -62,13 +62,11 @@ export const getLatestPosts = async (req, res) => {
         .sort({ CreatedAt: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
-      cache.set(category, response);
     } else {
       response = await PostModel.find({ approved: true, category: category })
         .sort({ CreatedAt: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
-      cache.set(category, response);
     }
 
     res.status(200).json(response);
@@ -102,13 +100,11 @@ export const getPopularPosts = async (req, res) => {
         .sort({ views: "desc", commentslength: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
-      cache.set(category, response);
     } else if (category) {
       response = await PostModel.find({ approved: true, category: category })
         .sort({ views: "desc", commentslength: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
-      cache.set(category, response);
     }
 
     res.status(200).json(response);
