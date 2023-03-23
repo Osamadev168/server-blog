@@ -31,7 +31,6 @@ import {
 } from "../Controller/post-controller.js";
 import { verifyToken } from "../FirebaseMiddleware.js";
 const Router = express.Router();
-Router.get("/get/all/blogs/:page/:limit", getBlogs);
 Router.post("/upload/image", upload.single("image"), uploadImage);
 Router.post("/create/:token", post);
 Router.post("/admin", verifyToken);
@@ -51,9 +50,7 @@ Router.get("/blog/:id", verifyCacheForBlog, getPostbyid);
 Router.delete("/post/:id", deletePost);
 Router.delete("/post/user/delete/blog/:id", deletePostUser);
 Router.post("/post/:id", addView);
-Router.get("/posts/category/:category", getPostbyCategory);
 Router.post("/post/:id/new/comment", submitComment);
-Router.get("/popular", getPostsbyPopularity);
 Router.get("/blog/tag/:tag", getBlogbyTag);
 Router.get("/blog/data/:id/:idToken", getBlogData_Edit);
 Router.put("/blog/update/:id/:idToken", updateBlog);

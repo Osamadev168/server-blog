@@ -328,6 +328,8 @@ export const updateBlog = async (req, res) => {
       };
       const id = req.params.id;
       await PostModel.updateOne({ _id: id }, { $set: postData });
+      cache.del(id);
+      cache.del("All");
       res.status(200).json("success!");
     }
   } catch (e) {

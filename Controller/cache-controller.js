@@ -1,5 +1,5 @@
 import NodeCache from "node-cache";
-export const cache = new NodeCache({ stdTTL: 2000 });
+export const cache = new NodeCache({ stdTTL: 4000 });
 export const verifyCache = (req, res, next) => {
   try {
     const { category } = req.params;
