@@ -11,6 +11,17 @@ export const verifyCache = (req, res, next) => {
     console.error(e);
   }
 };
+export const verifyCacheP = (req, res, next) => {
+  try {
+    const { category } = req.params;
+    if (cache.has(category)) {
+      return res.status(200).json(cache.get(category));
+    }
+    return next();
+  } catch (e) {
+    console.error(e);
+  }
+};
 export const verifyCacheForBlog = (req, res, next) => {
   try {
     const { id } = req.params;

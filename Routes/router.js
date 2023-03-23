@@ -3,6 +3,7 @@ import { upload, uploadImage } from "../Cloudinary/Cloudinary.js";
 import {
   verifyCache,
   verifyCacheForBlog,
+  verifyCacheP,
 } from "../Controller/cache-controller.js";
 import { sendEmail } from "../Controller/email-controller.js";
 import {
@@ -45,7 +46,7 @@ Router.get(
 );
 Router.get(
   "/blogs/popular/home/:category",
-  verifyCache,
+  verifyCacheP,
   getPopularBlogsForHomePage
 );
 
