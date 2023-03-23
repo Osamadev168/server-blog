@@ -74,6 +74,55 @@ export const getLatestPosts = async (req, res) => {
     console.error(e.message);
   }
 };
+export const getLatestBlogsForHomePage = async (req, res) => {
+  try {
+    let response;
+    let category = req.params.category;
+
+    if (category === "All") {
+      response = await PostModel.find({ approved: true })
+        .sort({
+          CreatedAt: "desc",
+        })
+        .limit(12);
+      cache.set(category, response);
+    } else {
+      response = await PostModel.find({ approved: true, category: category })
+        .sort({ CreatedAt: "desc" })
+        .limit(12);
+      cache.set(category, response);
+    }
+
+    res.status(200).json(response);
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+export const getPopularBlogsForHomePage = async (req, res) => {
+  try {
+    let response;
+    let category = req.params.category;
+
+    if (category === "All") {
+      response = await PostModel.find({ approved: true })
+        .sort({
+          views: "desc",
+          commentslength: "desc",
+        })
+        .limit(12);
+      cache.set(category, response);
+    } else {
+      response = await PostModel.find({ approved: true, category: category })
+        .sort({ views: "desc", commentslength: "desc" })
+        .limit(12);
+      cache.set(category, response);
+    }
+
+    res.status(200).json(response);
+  } catch (e) {
+    console.error(e.message);
+  }
+};
 export const getSubmittedPosts = async (req, res) => {
   try {
     let posts;
