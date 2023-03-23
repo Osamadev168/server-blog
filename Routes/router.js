@@ -1,5 +1,9 @@
 import express from "express";
 import { upload, uploadImage } from "../Cloudinary/Cloudinary.js";
+import {
+  verifyCache,
+  verifyCacheForBlog,
+} from "../Controller/cache-controller.js";
 import { sendEmail } from "../Controller/email-controller.js";
 import {
   addView,
@@ -31,12 +35,19 @@ Router.get("/get/all/blogs/:page/:limit", getBlogs);
 Router.post("/upload/image", upload.single("image"), uploadImage);
 Router.post("/create/:token", post);
 Router.post("/admin", verifyToken);
-Router.post("/latestposts/", getLatestPosts);
 Router.get("/posts/submitted", getSubmittedPosts);
 Router.get("/posts/submitted/user/author/:authorId", getUserSubmittedPosts);
-Router.get("/get/all/blogs/popular/:category/:page/:limit", getPopularPosts);
-Router.get("/get/all/blogs/latest/:category/:page/:limit", getLatestPosts);
-Router.get("/blog/:id", getPostbyid);
+Router.get(
+  "/get/all/blogs/popular/:category/:page/:limit",
+  verifyCache,
+  getPopularPosts
+);
+Router.get(
+  "/get/all/blogs/latest/:category/:page/:limit",
+  verifyCache,
+  getLatestPosts
+);
+Router.get("/blog/:id", verifyCacheForBlog, getPostbyid);
 Router.delete("/post/:id", deletePost);
 Router.delete("/post/user/delete/blog/:id", deletePostUser);
 Router.post("/post/:id", addView);

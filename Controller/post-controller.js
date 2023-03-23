@@ -1,7 +1,6 @@
 import PostModel from "../Model/Post.js";
-import sanitizeHtml from "sanitize-html";
 import Admin from "../firebaseAdmin.js";
-import { verifyToken } from "../FirebaseMiddleware.js";
+import { cache } from "./cache-controller.js";
 export const post = async (req, res) => {
   const {
     image,
@@ -63,11 +62,13 @@ export const getLatestPosts = async (req, res) => {
         .sort({ CreatedAt: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
+      cache.set(category, response);
     } else {
       response = await PostModel.find({ approved: true, category: category })
         .sort({ CreatedAt: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
+      cache.set(category, response);
     }
 
     res.status(200).json(response);
@@ -101,11 +102,13 @@ export const getPopularPosts = async (req, res) => {
         .sort({ views: "desc", commentslength: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
+      cache.set(category, response);
     } else if (category) {
       response = await PostModel.find({ approved: true, category: category })
         .sort({ views: "desc", commentslength: "desc" })
         .skip(pageOptions.page * pageOptions.limit)
         .limit(pageOptions.limit);
+      cache.set(category, response);
     }
 
     res.status(200).json(response);
@@ -156,8 +159,10 @@ export const getBlogbyTag = async (req, res) => {
   }
 };
 export const getPostbyid = async (req, res) => {
+  let id = req.params.id;
   try {
-    const Post = await PostModel.findById(req.params.id);
+    const Post = await PostModel.findById(id);
+    cache.set(id, Post);
     res.status(200).json(Post);
   } catch (e) {
     res.status(400).json("Post not found");

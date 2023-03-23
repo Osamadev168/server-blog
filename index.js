@@ -5,8 +5,10 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import Router from "./Routes/router.js";
 import { Connection } from "./Database/db.js";
+import NodeCache from "node-cache";
 dotenv.config();
 const App = express();
+const cache = new NodeCache({ stdTTL: 10 });
 var allowCrossDomain = function (req, res, next) {
   res.header("Access-Control-Allow-Origin", ["https://www.hubblefeed.com"]);
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
