@@ -90,7 +90,10 @@ export const getLatestBlogsForHomePage = async (req, res) => {
         .sort({ CreatedAt: "desc" })
         .limit(10);
     }
-    cache.set(category, response);
+    cache.mset([
+      { key: "latest", val: response },
+      { key: category, val: response },
+    ]);
 
     res.status(200).json(response);
   } catch (e) {
@@ -114,7 +117,10 @@ export const getPopularBlogsForHomePage = async (req, res) => {
         .sort({ views: "desc", commentslength: "desc" })
         .limit(8);
     }
-    cache.set(category, response);
+    cache.mset([
+      { key: "popular", val: response },
+      { key: category, val: response },
+    ]);
     res.status(200).json(response);
   } catch (e) {
     console.error(e.message);
