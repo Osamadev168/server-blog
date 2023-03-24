@@ -1,10 +1,6 @@
 import express from "express";
 import { upload, uploadImage } from "../Cloudinary/Cloudinary.js";
-import {
-  verifyCache,
-  verifyCacheForBlog,
-  verifyCacheP,
-} from "../Controller/cache-controller.js";
+import { verifyCacheForBlog } from "../Controller/cache-controller.js";
 import { sendEmail } from "../Controller/email-controller.js";
 import {
   addView,
@@ -41,7 +37,6 @@ Router.get("/posts/submitted", getSubmittedPosts);
 Router.get("/posts/submitted/user/author/:authorId", getUserSubmittedPosts);
 Router.get("/blogs/latest/home/:category", getLatestBlogsForHomePage);
 Router.get("/blogs/popular/home/:category", getPopularBlogsForHomePage);
-
 Router.get("/get/all/blogs/popular/:category/:page/:limit", getPopularPosts);
 Router.get("/get/all/blogs/latest/:category/:page/:limit", getLatestPosts);
 Router.get("/blog/:id", verifyCacheForBlog, getPostbyid);
