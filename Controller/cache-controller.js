@@ -2,9 +2,9 @@ import NodeCache from "node-cache";
 export const cache = new NodeCache({ stdTTL: 4000 });
 export const verifyCache = (req, res, next) => {
   try {
-    const { category } = req.params;
-    if (cache.has(category)) {
-      return res.status(200).json(cache.get(category));
+    const key = "latest";
+    if (cache.has(key)) {
+      return res.status(200).json(cache.get(key));
     }
     return next();
   } catch (e) {
@@ -13,9 +13,10 @@ export const verifyCache = (req, res, next) => {
 };
 export const verifyCacheP = (req, res, next) => {
   try {
-    const { category } = req.params;
-    if (cache.has(category)) {
-      return res.status(200).json(cache.get(category));
+    const key = "popular";
+
+    if (cache.has(key)) {
+      return res.status(200).json(cache.get(key));
     }
     return next();
   } catch (e) {
