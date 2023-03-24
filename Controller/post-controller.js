@@ -85,12 +85,10 @@ export const getLatestBlogsForHomePage = async (req, res) => {
           CreatedAt: "desc",
         })
         .limit(8);
-      cache.set("latest", response);
     } else {
       response = await PostModel.find({ approved: true, category: category })
         .sort({ CreatedAt: "desc" })
         .limit(8);
-      cache.del("latest");
     }
 
     res.status(200).json(response);
@@ -110,12 +108,10 @@ export const getPopularBlogsForHomePage = async (req, res) => {
           commentslength: "desc",
         })
         .limit(8);
-      cache.set("popular", response);
     } else {
       response = await PostModel.find({ approved: true, category: category })
         .sort({ views: "desc", commentslength: "desc" })
         .limit(8);
-      cache.del("popular");
     }
     res.status(200).json(response);
   } catch (e) {

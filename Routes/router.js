@@ -39,16 +39,8 @@ Router.post("/create/:token", post);
 Router.post("/admin", verifyToken);
 Router.get("/posts/submitted", getSubmittedPosts);
 Router.get("/posts/submitted/user/author/:authorId", getUserSubmittedPosts);
-Router.get(
-  "/blogs/latest/home/:category",
-  verifyCache,
-  getLatestBlogsForHomePage
-);
-Router.get(
-  "/blogs/popular/home/:category",
-  verifyCacheP,
-  getPopularBlogsForHomePage
-);
+Router.get("/blogs/latest/home/:category", getLatestBlogsForHomePage);
+Router.get("/blogs/popular/home/:category", getPopularBlogsForHomePage);
 
 Router.get("/get/all/blogs/popular/:category/:page/:limit", getPopularPosts);
 Router.get("/get/all/blogs/latest/:category/:page/:limit", getLatestPosts);
