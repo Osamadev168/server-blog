@@ -2,7 +2,7 @@ import NodeCache from "node-cache";
 export const cache = new NodeCache({ stdTTL: 4000 });
 export const verifyCache = (req, res, next) => {
   try {
-    const key = "latest";
+    const key = req.params.category;
     if (cache.has(key)) {
       return res.status(200).json(cache.get(key));
     }
@@ -13,7 +13,7 @@ export const verifyCache = (req, res, next) => {
 };
 export const verifyCacheP = (req, res, next) => {
   try {
-    const key = "popular";
+    const key = req.params.category;
 
     if (cache.has(key)) {
       return res.status(200).json(cache.get(key));
