@@ -107,12 +107,12 @@ export const getPopularBlogsForHomePage = async (req, res) => {
           views: "desc",
           commentslength: "desc",
         })
-        .limit(10);
+        .limit(8);
       cache.set("popular", response);
     } else {
       response = await PostModel.find({ approved: true, category: category })
         .sort({ views: "desc", commentslength: "desc" })
-        .limit(10);
+        .limit(8);
     }
     res.status(200).json(response);
   } catch (e) {
