@@ -35,8 +35,9 @@ export const post = async (req, res) => {
   try {
     let token = req.params.token;
     const adminId = process.env.AdminId;
+    const admin2Id = process.env.AdminId2;
     let decodedToken = await Admin.auth().verifyIdToken(token);
-    if (decodedToken.uid === adminId) {
+    if (decodedToken.uid === adminId || decodedToken.uid === admin2Id) {
       await adminPost.save();
       return res.status(200).json("success!");
     } else {
@@ -380,8 +381,9 @@ export const approvePost = async (req, res) => {
   try {
     let token = req.body.idToken;
     const adminId = process.env.AdminId;
+    const admin2Id = process.env.AdminId2;
     let decodedToken = await Admin.auth().verifyIdToken(token);
-    if (decodedToken.uid === adminId) {
+    if (decodedToken.uid === adminId || decodedToken.uid === admin2Id) {
       const id = req.params.id;
       await PostModel.updateOne({ _id: id }, { $set: { approved: true } });
       res.status(200).json("success!");
