@@ -9,7 +9,7 @@ dotenv.config();
 const App = express();
 App.use(
   cors({
-    origin: ["https://www.hubblefeed.com/", "http://localhost:5173"],
+    origin: ["https://www.hubblefeed.com", "http://localhost:5173"],
   })
 );
 App.use(helmet());
