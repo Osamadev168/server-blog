@@ -10,6 +10,7 @@ const App = express();
 App.use(
   cors({
     origin: ["https://www.hubblefeed.com", "http://localhost:5173"],
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   })
 );
 App.use(helmet());
