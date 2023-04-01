@@ -301,7 +301,7 @@ export const updateBlogAuthor = async (req, res) => {
         },
       }
     );
-    res.status(200).json("response");
+    res.status(200).json("Updated!");
   } catch (e) {
     console.error(e.message);
   }

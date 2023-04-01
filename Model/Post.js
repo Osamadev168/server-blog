@@ -68,6 +68,8 @@ PostSchema.index({
   title: "text",
   description: "text",
   tags: "text",
+  category: "text",
+  author: "text",
 });
 
 const PostModel = mongoose.model("posts", PostSchema);
