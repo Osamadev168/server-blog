@@ -434,26 +434,11 @@ export const deletePostUser = async (req, res) => {
 export const searchBlog = async (req, res) => {
   try {
     let query = req.query.blogs;
-    let result = await PostModel.find(
-      {
-        $text: {
-          $search: query,
-        },
-      }
-      // {
-      //   $search: {
-      //     index: "blogs",
-      //     text: {
-      //       query: query,
-      //       path: ["title", "description", "tags"],
-      //     },
-      //   },
-      // },
-
-      // {
-      //   title: "text",
-      // }
-    );
+    let result = await PostModel.find({
+      $text: {
+        $search: query,
+      },
+    });
     res.status(200).json(result);
   } catch (e) {
     console.error(e.message);
