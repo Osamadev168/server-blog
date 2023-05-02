@@ -70,6 +70,7 @@ PostSchema.index({
   tags: "text",
   category: "text",
   author: "text",
+  CreatedAt: -1,
 });
 
 const PostModel = mongoose.model("posts", PostSchema);

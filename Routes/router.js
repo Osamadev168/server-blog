@@ -2,6 +2,7 @@ import express from "express";
 import { upload, uploadImage } from "../Cloudinary/Cloudinary.js";
 import { verifyCacheForBlog } from "../Controller/cache-controller.js";
 import { sendEmail } from "../Controller/email-controller.js";
+import { rssfeed } from "../RSS/rss.js";
 import {
   addView,
   approvePost,
@@ -54,4 +55,5 @@ Router.post("/blog/update/comments", updateBlogAuthorinComments);
 Router.get("/search", searchBlog);
 Router.get("/blogs/slider", sliderShowBlogs);
 Router.post("/sendEmail", sendEmail);
+Router.get("/rss", rssfeed);
 export default Router;
