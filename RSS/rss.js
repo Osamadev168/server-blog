@@ -23,6 +23,7 @@ export const rssfeed = async (req, res) => {
     posts.forEach((post) => {
       feed.item({
         title: post.title,
+        image: post.image,
         description: post.description,
         url: `https://www.hubblefeed.com/${post.category}/${post.title}/${post._id}`,
         author: post.author,

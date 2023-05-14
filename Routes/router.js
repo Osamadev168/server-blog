@@ -40,7 +40,7 @@ Router.get("/blogs/latest/home/:category", getLatestBlogsForHomePage);
 Router.get("/blogs/popular/home/:category", getPopularBlogsForHomePage);
 Router.get("/get/all/blogs/popular/:category/:page/:limit", getPopularPosts);
 Router.get("/get/all/blogs/latest/:category/:page/:limit", getLatestPosts);
-Router.get("/blog/:id", verifyCacheForBlog, getPostbyid);
+Router.get("/blog/:id", getPostbyid);
 Router.delete("/post/:id", deletePost);
 Router.delete("/post/user/delete/blog/:id", deletePostUser);
 Router.post("/post/:id", addView);
