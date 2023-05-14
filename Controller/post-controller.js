@@ -203,7 +203,6 @@ export const getPostbyid = async (req, res) => {
   let id = req.params.id;
   try {
     const Post = await PostModel.findById(id);
-    cache.set(id, Post);
     res.status(200).json(Post);
   } catch (e) {
     res.status(400).json("Post not found");
