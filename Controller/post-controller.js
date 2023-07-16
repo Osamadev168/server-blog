@@ -357,7 +357,8 @@ export const updateBlog = async (req, res) => {
   const adminId2 = decodedToken.uid === secondAdmin;
   try {
     if (approved[0].approved === false || admin || adminId2) {
-      const { image, title, body, category, description, tags , updatedAt } = req.body;
+      const { image, title, body, category, description, tags } = req.body;
+      const updatedAt = Date.parse(req.body.updatedAt);
       const postData = {
         image,
         title,
@@ -369,8 +370,7 @@ export const updateBlog = async (req, res) => {
       };
       const id = req.params.id;
       await PostModel.updateOne({ _id: id }, { $set: postData });
-      cache.del(id);
-      cache.del("All");
+   
       res.status(200).json("success!");
     }
   } catch (e) {
