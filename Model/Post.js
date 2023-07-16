@@ -63,6 +63,11 @@ const PostSchema = new mongoose.Schema({
   approved: {
     type: Boolean,
   },
+  updatedAt  : {
+
+   type : Date
+
+  }
 });
 PostSchema.index({
   title: "text",
