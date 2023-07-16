@@ -358,7 +358,7 @@ export const updateBlog = async (req, res) => {
   try {
     if (approved[0].approved === false || admin || adminId2) {
       const { image, title, body, category, description, tags } = req.body;
-      const updatedAt = Date.parse(req.body.updatedAt);
+      const updatedAt = new Date()
       const postData = {
         image,
         title,
@@ -368,7 +368,9 @@ export const updateBlog = async (req, res) => {
         tags,
         updatedAt
       };
+
       const id = req.params.id;
+      console.log(postData)
       await PostModel.updateOne({ _id: id }, { $set: postData });
    
       res.status(200).json("success!");
