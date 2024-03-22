@@ -1,4 +1,5 @@
 import PostModel from "../Model/Post.js";
+import DraftModel from "../Model/Darft.js";
 import Admin from "../firebaseAdmin.js";
 import { cache } from "./cache-controller.js";
 export const post = async (req, res) => {
@@ -30,6 +31,11 @@ export const post = async (req, res) => {
     approved,
     tags,
   };
+  console.log(postData)
+  if (postData.category === "") {
+
+    postData.category = "General"
+  }
   const adminPost = new PostModel({ ...postData, approved: true });
   const userPost = new PostModel({ ...postData, approved: false });
   try {
@@ -181,7 +187,6 @@ export const getUserSubmittedPosts = async (req, res) => {
       CreatedAt: "desc",
     });
     res.status(200).json(posts);
-    console.log(posts);
   } catch (e) {
     console.log(e);
   }
@@ -460,3 +465,108 @@ export const sliderShowBlogs = async (req, res) => {
     console.error(e.message);
   }
 };
+
+export const getUserDrafts = async (req, res) => {
+  try {
+    let posts;
+    let authorId = req.params.authorID;
+    posts = await DraftModel.find({ authorId: authorId }).sort({
+      CreatedAt: "desc",
+    });
+    res.status(200).json(posts);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const updateDraft = async (req , res) =>
+ {
+  const {
+    image,
+    title,
+    category,
+    description,
+    author,
+    authorImage,
+    authorId,
+    CreatedAt,
+    body,
+  } = req.body;
+  const postData = {
+    image,
+    title,
+    category,
+    description,
+    author,
+    authorImage,
+    authorId,
+    CreatedAt,
+    body,
+  };
+  const postID = req.params.blogID
+  try
+  {
+      const draft = await DraftModel.findById(postID);
+      draft.set(postData)
+      draft.save();
+      return res.status(200).json({postID , message: "Draft updated successfully!" });
+
+  }
+  catch (e)
+   {
+    console.log(e)
+   }
+ }
+export const saveUserDrafts = async (req, res) => {
+  const {
+    postID,
+    image,
+    title,
+    category,
+    description,
+    author,
+    authorImage,
+    authorId,
+    CreatedAt,
+    body,
+  } = req.body;
+  const postData = {
+    postID,
+    image,
+    title,
+    category,
+    description,
+    author,
+    authorImage,
+    authorId,
+    CreatedAt,
+    body,
+  };
+  try 
+  {
+    const userPost = new DraftModel({approved : false ,category : "News" , ...postData});
+     const savedDraft = await  userPost.save();
+     const postID = savedDraft._id
+      return res.status(200).json({postID ,  message: "Draft created successfully!" });
+  } 
+  catch (error) 
+  {
+    return res.status(500).json({ error: error.message });
+  }
+};
+
+export const getDraftData = async (req , res) =>
+ {
+    try
+    {
+       const draftID = req.params.draftID;
+       let draftData = await DraftModel.find({ _id: draftID });
+
+       console.log(draftData)
+       res.status(200).json(draftData); 
+         }
+    catch(e) {
+      console.log(e)
+    }
+ }
+

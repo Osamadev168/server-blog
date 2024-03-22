@@ -12,6 +12,7 @@ import {
   getBlogbyTag,
   getBlogData_Edit,
   getBlogs,
+  getDraftData,
   getLatestBlogsForHomePage,
   getLatestPosts,
   getPopularBlogsForHomePage,
@@ -20,14 +21,17 @@ import {
   getPostbyid,
   getPostsbyPopularity,
   getSubmittedPosts,
+  getUserDrafts,
   getUserSubmittedPosts,
   post,
+  saveUserDrafts,
   searchBlog,
   sliderShowBlogs,
   submitComment,
   updateBlog,
   updateBlogAuthor,
   updateBlogAuthorinComments,
+  updateDraft,
 } from "../Controller/post-controller.js";
 import { verifyToken } from "../FirebaseMiddleware.js";
 const Router = express.Router();
@@ -56,4 +60,8 @@ Router.get("/search", searchBlog);
 Router.get("/blogs/slider", sliderShowBlogs);
 Router.post("/sendEmail", sendEmail);
 Router.get("/rss", rssfeed);
+Router.post("/saveUserDraft" , saveUserDrafts )
+Router.post("/updateDraft/:blogID"  , updateDraft)
+Router.get("/getuserdrafts/:authorID" , getUserDrafts)
+Router.get("/getdraftdata/:draftID" , getDraftData  )
 export default Router;
