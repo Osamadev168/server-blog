@@ -31,9 +31,7 @@ export const post = async (req, res) => {
     approved,
     tags,
   };
-  console.log(postData)
   if (postData.category === "") {
-
     postData.category = "General"
   }
   const adminPost = new PostModel({ ...postData, approved: true });
@@ -56,6 +54,58 @@ export const post = async (req, res) => {
     });
   }
 };
+
+const DeleteDraft = async  (draftID) => {
+  await PostModel.findById(draftID).deleteOne();
+} 
+
+export const CreatePost = async  (req , res) =>
+ {
+  const draftID = req.params.draftID
+  const {
+    image,
+    title,
+    category,
+    description,
+    comments,
+    author,
+    authorImage,
+    authorId,
+    approved,
+    tags,
+  } = req.body;
+  const CreatedAt = Date.parse(req.body.CreatedAt);
+  const body = req.body.body;
+  const postData = {
+    image,
+    title,
+    body,
+    category,
+    CreatedAt,
+    description,
+    comments,
+    author,
+    authorImage,
+    authorId,
+    approved,
+    tags,
+  };
+  if (postData.category === "") {
+    postData.category = "General"
+  }
+  const userPost = new PostModel({ ...postData, approved: false });
+ 
+  console.log(postData)
+  try {
+      await userPost.save();
+    await DraftModel.findById(req.params.draftID).deleteOne();
+      
+      return res.status(200).json("success!");
+  } catch (e) {
+    return  e.message
+  
+  }
+ }
 export const getLatestPosts = async (req, res) => {
   try {
     let response;
@@ -561,8 +611,6 @@ export const getDraftData = async (req , res) =>
     {
        const draftID = req.params.draftID;
        let draftData = await DraftModel.find({ _id: draftID });
-
-       console.log(draftData)
        res.status(200).json(draftData); 
          }
     catch(e) {

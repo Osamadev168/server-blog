@@ -6,6 +6,7 @@ import { rssfeed } from "../RSS/rss.js";
 import {
   addView,
   approvePost,
+  CreatePost,
   deletePost,
   deletePostUser,
   getAuthorBlogs,
@@ -64,4 +65,5 @@ Router.post("/saveUserDraft" , saveUserDrafts )
 Router.post("/updateDraft/:blogID"  , updateDraft)
 Router.get("/getuserdrafts/:authorID" , getUserDrafts)
 Router.get("/getdraftdata/:draftID" , getDraftData  )
+Router.post("/draft/create/:draftID" , CreatePost)
 export default Router;
