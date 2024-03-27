@@ -106,6 +106,23 @@ export const CreatePost = async  (req , res) =>
   
   }
  }
+
+export const deleteDraft = async (req , res) => 
+{
+  try
+   
+  {
+       const draftID = req.params.draftID;
+       console.log(draftID)
+    await DraftModel.findById(draftID).deleteOne();
+      
+       return res.status(200).json("success!");
+      }
+  catch(e)
+   {
+    console.log(e)
+   }
+}
 export const getLatestPosts = async (req, res) => {
   try {
     let response;

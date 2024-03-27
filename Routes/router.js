@@ -7,6 +7,7 @@ import {
   addView,
   approvePost,
   CreatePost,
+  deleteDraft,
   deletePost,
   deletePostUser,
   getAuthorBlogs,
@@ -66,4 +67,5 @@ Router.post("/updateDraft/:blogID"  , updateDraft)
 Router.get("/getuserdrafts/:authorID" , getUserDrafts)
 Router.get("/getdraftdata/:draftID" , getDraftData  )
 Router.post("/draft/create/:draftID" , CreatePost)
+Router.delete("/draft/delete/:draftID" , deleteDraft)
 export default Router;
